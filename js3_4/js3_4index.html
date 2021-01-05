@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>js3-1</title>
+</head>
+<body>
+  <header>
+    <h1>ToDo リスト</h1>
+  </header>
+
+  <div class="container">
+
+    <!--ラジオボタン-->
+    <section>
+      <input type="radio" name="status" value="AllTask" id="All" checked>すべて
+      <input type="radio" name="status" value="WorkingTask" id="Working">作業中
+      <input type="radio" name="status" value="DoneTask" id="Done">完了
+    </section>
+    
+    <!--リスト表示,ステータス-->
+    <section>
+      <table id="addTaskTarget">
+        <tr>
+          <th>ID</th>
+          <th>コメント</th>
+          <th>状態</th>
+        </tr>
+      </table>
+    </section>
+
+    <!--タスク追加入力欄-->
+    <section>
+      <h1>新規タスクの追加</h1>
+      <form>
+        <label>
+          <input type="text" id="inputValue">
+        </label>
+        <button type="button" id="addTaskButton">追加</button>
+      </form>
+    </section>
+  </div>
+  
+
+  <script src="js3_4.js"></script>
+</body>
+</html>
