@@ -19,6 +19,7 @@ addTaskButton.addEventListener('click', () => {
   }
   taskList.push(todos);
   addShowTask(taskList);
+  radioFilterling();
 })
 
 //入力されたtaskを追加し表示する関数
