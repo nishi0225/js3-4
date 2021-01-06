@@ -41,7 +41,7 @@ const addShowTask = (taskList) => {
     tdIdElement.textContent = index;
     tdTaskElement.textContent = todos.task;
     //td要素へButtonを追加
-    tdStatusButton.appendChild(createStatusButton(newTr));
+    tdStatusButton.appendChild(createStatusButton(newTr, todos));
     tdDeleteButton.appendChild(createDeleteButton(index));
     //td要素をtr要素へ追加
     addTaskTarget.appendChild(tdIdElement);
@@ -54,19 +54,19 @@ const addShowTask = (taskList) => {
   });
 }
 //状態Buttonを作成する関数
-const createStatusButton = (newTr) => {
+const createStatusButton = (newTr, todos) => {
   const statusButton = document.createElement('button');
-  statusButton.textContent = '作業中';
+  statusButton.textContent = todos.status;
   //状態,テキストの変更
   statusButton.addEventListener('click', () => {
     //行番号を取得
     const tr = newTr.rowIndex;
     if (statusButton.textContent === '作業中') {
-      statusButton.textContent = '完了';
       taskList[tr].status = '完了';
+      statusButton.textContent = todos.status;
     } else if (statusButton.textContent === '完了') {
-      statusButton.textContent = '作業中';
       taskList[tr].status = '作業中';
+      statusButton.textContent = todos.status;
     }
   })
   return statusButton;
@@ -104,6 +104,7 @@ const radioFilterling = () => {
   };
 }
 
+//ラジオButtonクリック時
 radioButtonAll.addEventListener('click', () => {
   radioFilterling();
 });
