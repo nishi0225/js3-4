@@ -43,7 +43,7 @@ const addShowTask = (taskList) => {
     tdTaskElement.textContent = todos.task;
     //td要素へButtonを追加
     tdStatusButton.appendChild(createStatusButton(newTr, todos));
-    tdDeleteButton.appendChild(createDeleteButton(index));
+    tdDeleteButton.appendChild(createDeleteButton(index, todos));
     //td要素をtr要素へ追加
     addTaskTarget.appendChild(tdIdElement);
     addTaskTarget.appendChild(tdTaskElement);
@@ -73,7 +73,7 @@ const createStatusButton = (newTr, todos) => {
   return statusButton;
 }
 //削除Buttonを作成する関数
-const createDeleteButton = (index) => {
+const createDeleteButton = (index, todos) => {
   const deleteButton = document.createElement('button');
   deleteButton.textContent = '削除'; 
 
@@ -82,7 +82,15 @@ const createDeleteButton = (index) => {
     for (let i = index; i < taskList.length; i++) {
       taskList[i].id = i;
     }
-    addShowTask(taskList);
+    //完了Buttonチェック時のみ完了の配列を表示
+    if (radioButtonDone.checked) {
+      const arrayDone = taskList.filter(todos => {
+        return todos.status === '完了';
+      })
+      addShowTask(arrayDone);
+    } else {
+      addShowTask(taskList);
+    }
   })
   return deleteButton;
 }
