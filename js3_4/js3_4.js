@@ -43,7 +43,7 @@ const addShowTask = (taskList) => {
     tdTaskElement.textContent = todos.task;
     //td要素へButtonを追加
     tdStatusButton.appendChild(createStatusButton(newTr, todos));
-    tdDeleteButton.appendChild(createDeleteButton(index, todos));
+    tdDeleteButton.appendChild(createDeleteButton(index,));
     //td要素をtr要素へ追加
     addTaskTarget.appendChild(tdIdElement);
     addTaskTarget.appendChild(tdTaskElement);
@@ -73,7 +73,7 @@ const createStatusButton = (newTr, todos) => {
   return statusButton;
 }
 //削除Buttonを作成する関数
-const createDeleteButton = (index, todos) => {
+const createDeleteButton = (index,) => {
   const deleteButton = document.createElement('button');
   deleteButton.textContent = '削除'; 
 
