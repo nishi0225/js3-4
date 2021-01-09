@@ -82,14 +82,19 @@ const createDeleteButton = (index,) => {
     for (let i = index; i < taskList.length; i++) {
       taskList[i].id = i;
     }
-    //完了Buttonチェック時のみ完了の配列を表示
-    if (radioButtonDone.checked) {
+    //削除Buttonを押したラジオButtonの配列を表示
+    if (radioButtonAll.checked) {
+      addShowTask(taskList);
+    } else if (radioButtonWorking.checked) {
+      const arrayWork = taskList.filter(todos => {
+        return todos.status === '作業中';
+      })
+      addShowTask(arrayWork);
+    } else if (radioButtonDone.checked) {
       const arrayDone = taskList.filter(todos => {
         return todos.status === '完了';
       })
       addShowTask(arrayDone);
-    } else {
-      addShowTask(taskList);
     }
   })
   return deleteButton;
