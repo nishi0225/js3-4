@@ -42,7 +42,7 @@ const addShowTask = (taskList) => {
     tdIdElement.textContent = index;
     tdTaskElement.textContent = todos.task;
     //td要素へButtonを追加
-    tdStatusButton.appendChild(createStatusButton(newTr, todos));
+    tdStatusButton.appendChild(createStatusButton(index, todos));
     tdDeleteButton.appendChild(createDeleteButton(index,));
     //td要素をtr要素へ追加
     addTaskTarget.appendChild(tdIdElement);
@@ -55,19 +55,33 @@ const addShowTask = (taskList) => {
   });
 }
 //状態Buttonを作成する関数
-const createStatusButton = (newTr, todos) => {
+const createStatusButton = (index, todos) => {
   const statusButton = document.createElement('button');
   statusButton.textContent = todos.status;
   //状態,テキストの変更
   statusButton.addEventListener('click', () => {
-    //行番号を取得
-    const tr = newTr.rowIndex;
-    if (statusButton.textContent === '作業中') {
-      taskList[tr].status = '完了';
+    if (radioButtonAll.checked && statusButton.textContent === '作業中') {
+      taskList[index].status = '完了';
       statusButton.textContent = todos.status;
-    } else if (statusButton.textContent === '完了') {
-      taskList[tr].status = '作業中';
+    } else if (radioButtonAll.checked && statusButton.textContent === '完了') {
+      taskList[index].status = '作業中';
       statusButton.textContent = todos.status;
+    } 
+    if (radioButtonWorking.checked && statusButton.textContent === '作業中') {
+      const workTask = taskList.filter(todos => {
+        return todos.status === '作業中';
+      })
+      workTask[index].status = '完了';
+      idReset(workTask);
+      radioFilterling();
+    }
+    if (radioButtonDone.checked && statusButton.textContent === '完了') {
+      const endTask = taskList.filter(todos => {
+        return todos.status === '完了';
+      })
+      endTask[index].status = '作業中';
+      idReset(endTask);
+      radioFilterling();
     }
   })
   return statusButton;
@@ -76,13 +90,11 @@ const createStatusButton = (newTr, todos) => {
 const createDeleteButton = (index,) => {
   const deleteButton = document.createElement('button');
   deleteButton.textContent = '削除'; 
-
+  //削除Buttonクリック時の処理
   deleteButton.addEventListener('click', () => {
     taskList.splice(index, 1);
-    for (let i = index; i < taskList.length; i++) {
-      taskList[i].id = i;
-    }
-    //削除Buttonを押したラジオButtonの配列を表示
+    idReset(taskList);
+    //削除Buttonを押したラジオButtonの配列を作成し表示
     if (radioButtonAll.checked) {
       addShowTask(taskList);
     } else if (radioButtonWorking.checked) {
@@ -117,7 +129,13 @@ const radioFilterling = () => {
     return addShowTask(doneTask);
   };
 }
-
+//オブジェクト内のidをリセット
+const idReset = (result) => {
+  for (let i = 0; i < result.length; i++) {
+    result[i].id = i;
+  }
+  return;
+}
 //ラジオButtonクリック時
 radioButtonAll.addEventListener('click', () => {
   radioFilterling();
@@ -128,8 +146,3 @@ radioButtonWorking.addEventListener('click', () => {
 radioButtonDone.addEventListener('click', () => {
   radioFilterling();
 });
-
-
-
-
-
